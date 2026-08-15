@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Badge, Frame, Navigation, TopBar } from "@shopify/polaris";
+import { Frame, Navigation, TopBar } from "@shopify/polaris";
 import {
   HomeIcon,
   NotificationIcon,
@@ -9,7 +9,6 @@ import {
   PlusIcon,
   SettingsIcon,
 } from "@shopify/polaris-icons";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { api } from "@/lib/api-client";
@@ -33,6 +32,7 @@ export function AppShell({
 
   const [unread, setUnread] = useState(0);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [bellOpen, setBellOpen] = useState(false);
 
   const loadUnread = useCallback(async () => {
     try {
@@ -121,18 +121,52 @@ export function AppShell({
   );
 
   const bellMarkup = (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, paddingRight: 12 }}>
-      {unread > 0 && (
-        <Badge tone="critical" size="small">
-          {String(unread)}
-        </Badge>
-      )}
-      <Link href="/notifications" aria-label="Notifications" title="Notifications">
-        <span style={{ display: "inline-flex", alignItems: "center", cursor: "pointer", color: "#202223" }}>
+    <TopBar.Menu
+      activatorContent={
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            width: 40,
+            height: 40,
+          }}
+        >
           <NotificationIcon width={20} height={20} />
-        </span>
-      </Link>
-    </div>
+          {unread > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: 4,
+                right: 4,
+                minWidth: 16,
+                height: 16,
+                borderRadius: 8,
+                background: "#d82c0d",
+                color: "#fff",
+                fontSize: 11,
+                lineHeight: "16px",
+                textAlign: "center",
+                padding: "0 4px",
+                fontWeight: 600,
+                boxSizing: "border-box",
+              }}
+            >
+              {unread > 9 ? "9+" : unread}
+            </span>
+          )}
+        </div>
+      }
+      actions={[
+        {
+          items: [{ content: "View all notifications", onAction: () => router.push("/notifications") }],
+        },
+      ]}
+      open={bellOpen}
+      onOpen={() => setBellOpen(true)}
+      onClose={() => setBellOpen(false)}
+    />
   );
 
   const topBar = (

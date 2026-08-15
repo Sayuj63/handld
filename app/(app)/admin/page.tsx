@@ -81,25 +81,28 @@ export default function AdminQueuePage() {
       <BlockStack gap="400">
         {error && <Banner tone="critical">{error}</Banner>}
 
-        <Grid columns={{ xs: 2, md: 4 }}>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">Open</Text>
-            <Text as="p" variant="heading2xl">{overview?.totals.open ?? "—"}</Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">Total</Text>
-            <Text as="p" variant="heading2xl">{overview?.totals.total ?? "—"}</Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">Completed</Text>
-            <Text as="p" variant="heading2xl">{overview ? overview.totals.total - overview.totals.open : "—"}</Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">Overdue (7d+)</Text>
-            <Text as="p" variant="heading2xl" tone={overdue > 0 ? "critical" : undefined}>
-              {overdue}
-            </Text>
-          </Card>
+        <Grid columns={{ xs: 2, md: 4 }} gap={{ xs: "16px", md: "16px" }}>
+          {[
+            { label: "Open", value: overview?.totals.open ?? "—", tone: undefined as string | undefined },
+            { label: "Total", value: overview?.totals.total ?? "—", tone: undefined },
+            {
+              label: "Completed",
+              value: overview ? String(overview.totals.total - overview.totals.open) : "—",
+              tone: undefined,
+            },
+            { label: "Overdue (7d+)", value: String(overdue), tone: overdue > 0 ? "critical" : undefined },
+          ].map((card) => (
+            <Card key={card.label} padding="400">
+              <BlockStack gap="100">
+                <Text as="p" variant="bodyMd" tone="subdued" truncate>
+                  {card.label}
+                </Text>
+                <Text as="p" variant="heading2xl" tone={card.tone as "critical" | undefined}>
+                  {card.value}
+                </Text>
+              </BlockStack>
+            </Card>
+          ))}
         </Grid>
 
         <Card padding="400">

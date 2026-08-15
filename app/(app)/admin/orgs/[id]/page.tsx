@@ -149,27 +149,32 @@ export default function OrgDetailPage() {
 
         {isManager && analytics && (
           <>
-            <Grid columns={{ xs: 2, md: 4 }}>
-              <Card padding="400">
-                <Text as="p" variant="bodyMd" tone="subdued">Open</Text>
-                <Text as="p" variant="heading2xl">{analytics.totals.open}</Text>
-              </Card>
-              <Card padding="400">
-                <Text as="p" variant="bodyMd" tone="subdued">Completion rate</Text>
-                <Text as="p" variant="heading2xl">{analytics.totals.completionRate}%</Text>
-              </Card>
-              <Card padding="400">
-                <Text as="p" variant="bodyMd" tone="subdued">Avg turnaround</Text>
-                <Text as="p" variant="heading2xl">
-                  {analytics.totals.avgTurnaroundDays != null ? `${analytics.totals.avgTurnaroundDays}d` : "—"}
-                </Text>
-              </Card>
-              <Card padding="400">
-                <Text as="p" variant="bodyMd" tone="subdued">Overdue</Text>
-                <Text as="p" variant="heading2xl" tone={analytics.totals.overdue > 0 ? "critical" : undefined}>
-                  {analytics.totals.overdue}
-                </Text>
-              </Card>
+            <Grid columns={{ xs: 2, md: 4 }} gap={{ xs: "16px", md: "16px" }}>
+              {[
+                { label: "Open", value: String(analytics.totals.open), tone: undefined as string | undefined },
+                { label: "Completed", value: `${analytics.totals.completionRate}%`, tone: undefined },
+                {
+                  label: "Turnaround",
+                  value: analytics.totals.avgTurnaroundDays != null ? `${analytics.totals.avgTurnaroundDays}d` : "—",
+                  tone: undefined,
+                },
+                {
+                  label: "Overdue",
+                  value: String(analytics.totals.overdue),
+                  tone: analytics.totals.overdue > 0 ? "critical" : undefined,
+                },
+              ].map((card) => (
+                <Card key={card.label} padding="400">
+                  <BlockStack gap="100">
+                    <Text as="p" variant="bodyMd" tone="subdued" truncate>
+                      {card.label}
+                    </Text>
+                    <Text as="p" variant="heading2xl" tone={card.tone as "critical" | undefined}>
+                      {card.value}
+                    </Text>
+                  </BlockStack>
+                </Card>
+              ))}
             </Grid>
 
             <Card>
