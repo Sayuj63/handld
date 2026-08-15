@@ -17,6 +17,7 @@ import {
 } from "@shopify/polaris";
 import { useParams, useRouter } from "next/navigation";
 
+import { PasswordField } from "@/components/password-field";
 import { api } from "@/lib/api-client";
 import { authClient, signIn, signUp } from "@/lib/auth-client";
 
@@ -197,9 +198,7 @@ export default function InvitePage() {
                         autoComplete="off"
                         helpText="Your invitation is tied to this email"
                       />
-                      <TextField
-                        label="Password"
-                        type="password"
+                      <PasswordField
                         value={password}
                         onChange={setPassword}
                         autoComplete="new-password"
@@ -227,9 +226,7 @@ export default function InvitePage() {
                         onChange={setLoginEmail}
                         autoComplete="email"
                       />
-                      <TextField
-                        label="Password"
-                        type="password"
+                      <PasswordField
                         value={loginPassword}
                         onChange={setLoginPassword}
                         autoComplete="current-password"

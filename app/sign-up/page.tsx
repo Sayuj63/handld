@@ -15,6 +15,7 @@ import {
 } from "@shopify/polaris";
 import { useRouter } from "next/navigation";
 
+import { PasswordField } from "@/components/password-field";
 import { signUp } from "@/lib/auth-client";
 
 export default function SignUpPage() {
@@ -68,9 +69,7 @@ export default function SignUpPage() {
                 autoComplete="email"
                 placeholder="you@yourstore.com"
               />
-              <TextField
-                label="Password"
-                type="password"
+              <PasswordField
                 value={password}
                 onChange={setPassword}
                 autoComplete="new-password"

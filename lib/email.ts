@@ -3,7 +3,9 @@ import { Resend } from "resend";
 /* Email delivery: Resend in production, console in dev. */
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-export const EMAIL_FROM = process.env.EMAIL_FROM || "ChangeDesk <no-reply@changedesk.local>";
+// No domain yet? Resend's onboarding@resend.dev test sender only delivers to
+// your own account email. Set EMAIL_FROM to a verified domain once you add one.
+export const EMAIL_FROM = process.env.EMAIL_FROM || "ChangeDesk <onboarding@resend.dev>";
 
 export async function sendEmail(input: {
   to: string;

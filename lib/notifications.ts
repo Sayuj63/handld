@@ -155,13 +155,21 @@ export async function flushOutbox(orgId?: string | null) {
         .set({ status: "sent", sentAt: new Date() })
         .where(eq(emailOutbox.id, row.id));
     } catch (err) {
+      const message = err instanceof Error ? err.message : "send failed";
       const attempts = row.attemptCount + 1;
+      // Permanent failures (unverified sender domain, test-sender
+      // restrictions, invalid API key) will never succeed on retry — fail
+      // them immediately instead of leaving them stuck in the queue.
+      const permanent =
+        /only send testing emails|domain.*not.*verif|unverified|invalid api key|unauthorized|forbidden/i.test(
+          message,
+        );
       await db
         .update(emailOutbox)
         .set({
           attemptCount: attempts,
-          status: attempts >= 3 ? "failed" : "pending",
-          error: err instanceof Error ? err.message.slice(0, 500) : "send failed",
+          status: permanent || attempts >= 3 ? "failed" : "pending",
+          error: message.slice(0, 500),
         })
         .where(eq(emailOutbox.id, row.id));
     }

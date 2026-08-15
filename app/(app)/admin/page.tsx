@@ -6,7 +6,6 @@ import {
   BlockStack,
   Card,
   Grid,
-  InlineStack,
   Page,
   Select,
   Spinner,
@@ -103,36 +102,28 @@ export default function AdminQueuePage() {
           </Card>
         </Grid>
 
-        <Card padding="300">
-          <InlineStack gap="300" wrap>
-            <div style={{ minWidth: 200 }}>
-              <Select
-                label="Organization"
-                options={[{ label: "All organizations", value: "" }, ...orgs.map((o) => ({ label: o.orgName, value: o.orgId }))]}
-                value={orgId}
-                onChange={setOrgId}
-              />
-            </div>
-            <div style={{ minWidth: 160 }}>
-              <Select
-                label="Status"
-                options={[{ label: "All statuses", value: "" }, ...REQUEST_STATUSES.map((s) => ({ label: STATUS_LABELS[s], value: s }))]}
-                value={status}
-                onChange={setStatus}
-              />
-            </div>
-            <div style={{ minWidth: 160 }}>
-              <Select
-                label="Priority"
-                options={[{ label: "All priorities", value: "" }, ...PRIORITIES.map((p) => ({ label: PRIORITY_LABELS[p], value: p }))]}
-                value={priority}
-                onChange={setPriority}
-              />
-            </div>
-            <div style={{ minWidth: 220, flex: 1 }}>
-              <TextField label="Search" value={q} onChange={setQ} placeholder="Search title or description" autoComplete="off" />
-            </div>
-          </InlineStack>
+        <Card padding="400">
+          <Grid columns={{ xs: 1, sm: 2, lg: 4 }} gap={{ xs: "400" }}>
+            <Select
+              label="Organization"
+              options={[{ label: "All organizations", value: "" }, ...orgs.map((o) => ({ label: o.orgName, value: o.orgId }))]}
+              value={orgId}
+              onChange={setOrgId}
+            />
+            <Select
+              label="Status"
+              options={[{ label: "All statuses", value: "" }, ...REQUEST_STATUSES.map((s) => ({ label: STATUS_LABELS[s], value: s }))]}
+              value={status}
+              onChange={setStatus}
+            />
+            <Select
+              label="Priority"
+              options={[{ label: "All priorities", value: "" }, ...PRIORITIES.map((p) => ({ label: PRIORITY_LABELS[p], value: p }))]}
+              value={priority}
+              onChange={setPriority}
+            />
+            <TextField label="Search" value={q} onChange={setQ} placeholder="Search title or description" autoComplete="off" />
+          </Grid>
         </Card>
 
         <Text as="p" variant="bodySm" tone="subdued">
