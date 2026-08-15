@@ -32,8 +32,11 @@ from the PRD (`PRD.md`).
   per-user frequency prefs, and idempotency keys (see `lib/notifications.ts`).
 - **Rate limiting** — Upstash Ratelimit (in-memory fallback in dev) on API,
   auth, upload, and invite endpoints.
-- **Attachments** — private storage (local disk in dev, Cloudflare R2 when
-  configured), served through an authenticated proxy route.
+- **Attachments** — screenshots are compressed in the browser before
+  upload (Vercel caps request bodies at ~4.5 MB), then stored privately:
+  Postgres `file_blobs` by default (works on serverless), Cloudflare R2
+  automatically when `R2_*` vars are set. Served through an authenticated
+  proxy route.
 
 ## Getting started
 
