@@ -81,7 +81,7 @@ export default function AdminQueuePage() {
       <BlockStack gap="400">
         {error && <Banner tone="critical">{error}</Banner>}
 
-        <Grid columns={{ xs: 2, md: 4 }} gap={{ xs: "16px", md: "16px" }}>
+        <Grid columns={{ xs: 2, md: 2, xl: 4 }} gap={{ xs: "16px", md: "16px" }}>
           {[
             { label: "Open", value: overview?.totals.open ?? "—", tone: undefined as string | undefined },
             { label: "Total", value: overview?.totals.total ?? "—", tone: undefined },
@@ -94,7 +94,7 @@ export default function AdminQueuePage() {
           ].map((card) => (
             <Card key={card.label} padding="400">
               <BlockStack gap="100">
-                <Text as="p" variant="bodyMd" tone="subdued" truncate>
+                <Text as="p" variant="bodyMd" tone="subdued">
                   {card.label}
                 </Text>
                 <Text as="p" variant="heading2xl" tone={card.tone as "critical" | undefined}>

@@ -149,7 +149,7 @@ export default function OrgDetailPage() {
 
         {isManager && analytics && (
           <>
-            <Grid columns={{ xs: 2, md: 4 }} gap={{ xs: "16px", md: "16px" }}>
+            <Grid columns={{ xs: 2, md: 2, xl: 4 }} gap={{ xs: "16px", md: "16px" }}>
               {[
                 { label: "Open", value: String(analytics.totals.open), tone: undefined as string | undefined },
                 { label: "Completed", value: `${analytics.totals.completionRate}%`, tone: undefined },
@@ -166,7 +166,7 @@ export default function OrgDetailPage() {
               ].map((card) => (
                 <Card key={card.label} padding="400">
                   <BlockStack gap="100">
-                    <Text as="p" variant="bodyMd" tone="subdued" truncate>
+                    <Text as="p" variant="bodyMd" tone="subdued">
                       {card.label}
                     </Text>
                     <Text as="p" variant="heading2xl" tone={card.tone as "critical" | undefined}>
