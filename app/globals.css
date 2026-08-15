@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* ChangeDesk sits on top of Polaris — keep the canvas light and neutral
+   so Polaris's own tokens (whites, soft greys, restrained green) drive the
+   look, exactly like the Shopify Admin. Tailwind handles page layout only. */
+
+:root {
+  --background: #f6f6f7;
+}
+
+html,
+body {
+  background: var(--background);
+  color: #202223;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+/* Thin scrollbars to match Polaris */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9cccf;
+  border-radius: 4px;
+}
+
+/* Minimal prose styling for rich-text descriptions */
+.cd-prose {
+  font-size: 1.4rem;
+  line-height: 1.7;
+  color: #202223;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.cd-prose a {
+  color: #2c6ecb;
+  text-decoration: underline;
+}
