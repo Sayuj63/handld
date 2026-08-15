@@ -18,6 +18,7 @@ import { XIcon } from "@shopify/polaris-icons";
 import { useRouter } from "next/navigation";
 
 import { api } from "@/lib/api-client";
+import { compressImageFiles } from "@/lib/compress-image";
 import { PRIORITIES, PRIORITY_LABELS, REQUEST_TYPES, TYPE_LABELS } from "@/lib/constants";
 import type { OrgLite } from "@/lib/types";
 
@@ -61,7 +62,9 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
     const onPaste = (e: ClipboardEvent) => {
       const pasted = Array.from(e.clipboardData?.files ?? []);
       if (pasted.length) {
-        setFiles((prev) => [...prev, ...pasted].slice(0, 5));
+        void compressImageFiles(pasted.slice(0, 5)).then((compressed) =>
+          setFiles((prev) => [...prev, ...compressed].slice(0, 5)),
+        );
         e.preventDefault();
       }
     };
@@ -82,7 +85,10 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
       if (storeId) form.set("storeId", storeId);
       if (referenceUrl.trim()) form.set("referenceUrl", referenceUrl.trim());
       if (targetSection.trim()) form.set("targetSection", targetSection.trim());
-      for (const f of files) form.append("files", f);
+      // Re-compress anything that was added before the submit click, so the
+      // multipart body stays under Vercel's request-size cap.
+      const ready = await compressImageFiles(files);
+      for (const f of ready) form.append("files", f);
 
       const res = await api<{ id: string }>("/api/change-requests", {
         method: "POST",
@@ -146,10 +152,9 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
       </Card>
 
       <Card>
-        <BlockStack gap="300">
-          <Text as="h2" variant="headingMd">
-            Screenshots <Text as="span" tone="subdued">(up to 5, 10 MB each)</Text>
-          </Text>
+        <BlockStack gap="300">            <Text as="h2" variant="headingMd">
+              Screenshots <Text as="span" tone="subdued">(up to 5, auto-compressed)</Text>
+            </Text>
           <DropZone
             accept="image/*"
             allowMultiple

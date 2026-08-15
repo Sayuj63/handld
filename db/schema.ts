@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  customType,
   index,
   integer,
   jsonb,
@@ -10,6 +11,19 @@ import {
   uniqueIndex,
   type AnyPgColumn,
 } from "drizzle-orm/pg-core";
+
+/** Postgres bytea column (drizzle 0.45 doesn't ship a bytea builder). */
+const bytea = customType<{ data: Buffer; driverData: Uint8Array }>({
+  dataType() {
+    return "bytea";
+  },
+  toDriver(value: Buffer): Uint8Array {
+    return new Uint8Array(value);
+  },
+  fromDriver(value: Uint8Array): Buffer {
+    return Buffer.from(value);
+  },
+});
 import { randomUUID } from "node:crypto";
 
 /* ─────────────────────────────────────────────────────────────
@@ -255,6 +269,20 @@ export const attachments = pgTable(
   },
   (t) => [index("attachments_request_idx").on(t.changeRequestId)],
 );
+
+/**
+ * Raw file bytes for attachments when no object store (R2) is configured.
+ * Vercel's serverless filesystem is read-only, so the local-disk fallback
+ * can't be used in production — Postgres is the writable store that works
+ * everywhere. Rows are keyed by the storage key; delete alongside the
+ * attachment when a request/comment is removed.
+ */
+export const fileBlobs = pgTable("file_blobs", {
+  key: text("key").primaryKey(),
+  data: bytea("data").notNull(),
+  contentType: text("content_type").notNull().default("application/octet-stream"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
 
 export const notifications = pgTable(
   "notifications",

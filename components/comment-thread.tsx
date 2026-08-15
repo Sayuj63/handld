@@ -16,6 +16,7 @@ import {
 import { XIcon } from "@shopify/polaris-icons";
 
 import { api } from "@/lib/api-client";
+import { compressImageFiles } from "@/lib/compress-image";
 import type { AttachmentLite, CommentLite } from "@/lib/types";
 
 export function CommentThread({
@@ -41,7 +42,8 @@ export function CommentThread({
       let attachmentIds: string[] = [];
       if (files.length) {
         const form = new FormData();
-        for (const f of files) form.append("files", f);
+        const ready = await compressImageFiles(files);
+        for (const f of ready) form.append("files", f);
         const up = await api<{ attachments: { id: string; url: string; fileName: string }[] }>(
           `/api/change-requests/${requestId}/attachments`,
           { method: "POST", body: form },

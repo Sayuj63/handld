@@ -20,11 +20,15 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     let message = `Request failed (${res.status})`;
-    try {
-      const body = await res.json();
-      if (body?.error) message = body.error;
-    } catch {
-      /* not json */
+    if (res.status === 413) {
+      message = "File too large for upload — try a smaller screenshot (under ~4 MB)";
+    } else {
+      try {
+        const body = await res.json();
+        if (body?.error) message = body.error;
+      } catch {
+        /* not json */
+      }
     }
     throw new ApiClientError(message, res.status);
   }
