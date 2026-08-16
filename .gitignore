@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local dev artifacts (Playwright previews, reference measurements)
+/preview-shots
+/umano-measurements.json
+/scroll-step-*.png
+/105e7cd3a106296d90d081af3766923516632143.webp

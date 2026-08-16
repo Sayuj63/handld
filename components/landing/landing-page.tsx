@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { LandingCarousel } from "@/components/landing/landing-carousel";
-import { LandingFeatures } from "@/components/landing/landing-features";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHeader } from "@/components/landing/landing-header";
 import { LandingHero } from "@/components/landing/landing-hero";
@@ -25,8 +24,8 @@ export function LandingPage() {
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
-    // The carousel emits "hd:carousel" while pinned; when the user scrolls
-    // back up past it, tell the header to leave carousel mode.
+    // Carousel bookend: when the user scrolls back above or past the pinned
+    // section, tell the header to leave carousel mode.
     const leave = () => {
       window.dispatchEvent(new Event("hd:carousel:leave"));
     };
@@ -55,11 +54,10 @@ export function LandingPage() {
       <main>
         <LandingHero />
         <section className="hd-clients" id="clients">
-          <p className="hd-clients__line">Already handling changes for 8+ Shopify stores</p>
+          <p className="hd-clients__line">Already handling changes for 8+ growing brands</p>
         </section>
         <LandingReveal />
         <LandingCarousel />
-        <LandingFeatures />
         <LandingPricing />
       </main>
       <LandingFooter />

@@ -5,7 +5,7 @@ import { useState } from "react";
 const FAQS = [
   {
     q: "What kind of changes can I submit?",
-    a: "Anything from copy edits and banner swaps to layout tweaks, new sections, or bug fixes — attach a screenshot, describe what you need, and it's in the queue.",
+    a: "Anything on your site — copy edits, banner swaps, layout tweaks, new sections, or bug fixes. Attach a screenshot, describe what you need, and it's in the queue.",
   },
   {
     q: "How fast do requests get picked up?",
@@ -45,7 +45,7 @@ export function LandingPricing() {
               </p>
               <p className="hd-plan__name">Retainer</p>
               <p className="hd-plan__desc">
-                A dedicated Shopify developer handling unlimited change requests, delivered asynchronously.
+                A dedicated developer handling unlimited change requests on your site, delivered asynchronously.
               </p>
               <ul className="hd-plan__features">
                 {[
