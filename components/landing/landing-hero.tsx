@@ -47,11 +47,8 @@ export function LandingHero() {
         ease: "back.out(1.5)",
       });
 
-      // Scroll parallax: phone dips, headline drifts up.
-      gsap.to(".hd-hero__phone-stage", {
-        y: 100,
-        scrollTrigger: { trigger: section, start: "top top", end: "bottom top", scrub: true },
-      });
+      // Subtle scroll fade on the title — phone stays put inside the hero so
+      // it can't leak into the next section (hero has overflow:hidden).
       gsap.to(".hd-hero__title", {
         y: -40,
         opacity: 0.7,

@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { BentoFlex } from "@/components/landing/bento-flex";
 import { WorkflowIcons } from "@/components/landing/workflow-icons";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -182,10 +181,10 @@ export function LandingCarousel() {
                 slide.variant === "request-card" ? " hd-carousel__panel--dark" : ""
               }`}
             >
-              {slide.variant === "character" && <CharacterArt />}
+              {slide.variant === "character" && <VideoArt src="/videos/character-waving.mp4" />}
               {slide.variant === "request-card" && <RequestCardArt />}
               {slide.variant === "workflow" && <WorkflowIcons />}
-              {slide.variant === "clouds" && <BentoFlex />}
+              {slide.variant === "clouds" && <VideoArt src="/videos/abstract-shapes.mp4" />}
               {i === SLIDES.length - 1 && <div className="hd-carousel__last-tint" aria-hidden />}
             </div>
             <div className="hd-carousel__copy">
@@ -201,22 +200,19 @@ export function LandingCarousel() {
 
 /* ---------- individual card art (small, self-contained) ---------- */
 
-function CharacterArt() {
+// Video fills the panel end-to-end so no cream background bleeds around it.
+function VideoArt({ src }: { src: string }) {
   return (
-    <div className="hd-character">
-      <div className="hd-character__fig" aria-hidden>
-        <div className="hd-character__hair" />
-        <div className="hd-character__head" />
-        <span className="hd-character__eye hd-character__eye--l" />
-        <span className="hd-character__eye hd-character__eye--r" />
-        <span className="hd-character__smile" />
-        <div className="hd-character__body" />
-        <div className="hd-character__arm hd-character__arm--l" />
-        <div className="hd-character__arm hd-character__arm--r">
-          <span className="hd-character__hand" />
-        </div>
-      </div>
-    </div>
+    <video
+      className="hd-carousel__video"
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      aria-hidden
+    />
   );
 }
 
