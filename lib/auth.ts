@@ -47,11 +47,27 @@ const roles = {
   }),
 };
 
+// Same value can be provided under multiple env names depending on host.
+// - Local dev sets BETTER_AUTH_URL + NEXT_PUBLIC_APP_URL to http://localhost:3000
+// - Vercel auto-injects VERCEL_URL (no protocol) for the deploy URL
+// - Production should set NEXT_PUBLIC_APP_URL to the custom domain
+const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined;
+const trustedOrigins = Array.from(
+  new Set(
+    [
+      process.env.BETTER_AUTH_URL,
+      process.env.NEXT_PUBLIC_APP_URL,
+      vercelUrl,
+    ].filter(Boolean) as string[],
+  ),
+);
+const baseURL = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || vercelUrl;
+
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL,
   secret: process.env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, { provider: "pg" }),
-  trustedOrigins: [process.env.BETTER_AUTH_URL].filter(Boolean) as string[],
+  trustedOrigins,
 
   emailAndPassword: {
     enabled: true,
