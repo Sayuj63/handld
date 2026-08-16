@@ -1405,17 +1405,18 @@
 .hd-faq {
   background: var(--hd-black);
   color: var(--hd-white);
-  padding: 0 6vw clamp(80px, 9vw, 120px);
+  padding: clamp(80px, 10vw, 140px) clamp(24px, 8vw, 120px);
 }
 
 .hd-faq__inner {
   max-width: 860px;
   margin: 0 auto;
+  padding-inline: clamp(0px, 2vw, 32px);
 }
 
 .hd-faq__title {
   font-size: clamp(32px, 4.4vw, 54px);
-  margin-bottom: 36px;
+  margin-bottom: clamp(28px, 4vw, 56px);
   text-align: center;
 }
 
@@ -1669,8 +1670,8 @@
 .hd-footer__giant-text {
   font-family: var(--hd-font-display);
   font-weight: 800;
-  font-size: clamp(48px, 14vw, 200px);
-  letter-spacing: -0.04em;
+  font-size: clamp(32px, 8vw, 120px);
+  letter-spacing: -0.03em;
   color: rgba(13, 15, 20, 0.16);
   white-space: nowrap;
   line-height: 1;
