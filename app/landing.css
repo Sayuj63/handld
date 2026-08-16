@@ -183,11 +183,11 @@
 }
 
 .hd-header__logo-mark {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  background: var(--hd-orange);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   display: inline-block;
+  object-fit: contain;
 }
 
 .hd-header__links {
@@ -1525,21 +1525,13 @@
 }
 
 .hd-footer__brand-logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--hd-pure-white);
-  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   margin-bottom: 12px;
-}
-
-.hd-footer__brand-logo-mark::after {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, var(--hd-orange) 0%, var(--hd-orange-deep) 100%);
-  clip-path: polygon(20% 0, 80% 0, 100% 40%, 100% 100%, 0 100%, 0 40%);
+  object-fit: contain;
+  background: var(--hd-pure-white);
+  padding: 4px;
 }
 
 .hd-footer__brand-name {

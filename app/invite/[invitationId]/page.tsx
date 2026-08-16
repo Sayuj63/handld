@@ -15,6 +15,7 @@ import {
   Text,
   TextField,
 } from "@shopify/polaris";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 import { PasswordField } from "@/components/password-field";
@@ -151,14 +152,24 @@ export default function InvitePage() {
     <Page narrowWidth>
       <Box paddingBlockStart="400">
         <BlockStack gap="400">
-          <BlockStack gap="100">
-            <Text as="h1" variant="heading2xl" alignment="center">
-              You&apos;re invited
-            </Text>
-            <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
-              {invitation.orgName} has invited <strong>{invitation.email}</strong> to join
-              handld{invitation.role === "owner" ? " as an organization owner" : ""}.
-            </Text>
+          <BlockStack gap="300" inlineAlign="center">
+            <Image
+              src="/brand/handld-logo.png"
+              alt="handld"
+              width={64}
+              height={64}
+              priority
+              style={{ borderRadius: 14 }}
+            />
+            <BlockStack gap="100">
+              <Text as="h1" variant="heading2xl" alignment="center">
+                You&apos;re invited
+              </Text>
+              <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
+                {invitation.orgName} has invited <strong>{invitation.email}</strong> to join
+                handld{invitation.role === "owner" ? " as an organization owner" : ""}.
+              </Text>
+            </BlockStack>
           </BlockStack>
 
           <Card>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const EMAIL = "hi@handld.atrey.dev";
@@ -44,7 +45,13 @@ export function LandingFooter() {
       <div className="hd-footer__content">
         <div className="hd-footer__grid">
           <div className="hd-footer__brand">
-            <span className="hd-footer__brand-logo-mark" aria-hidden />
+            <Image
+              className="hd-footer__brand-logo-mark"
+              src="/brand/handld-logo.png"
+              alt=""
+              width={44}
+              height={44}
+            />
             <span className="hd-footer__brand-name">handld</span>
             <div className="hd-footer__brand-spacer" />
             <p className="hd-footer__brand-tagline">

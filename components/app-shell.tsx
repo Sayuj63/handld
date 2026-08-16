@@ -177,9 +177,18 @@ export function AppShell({
     />
   );
 
+  const logo = {
+    topBarSource: "/brand/handld-logo.png",
+    contextualSaveBarSource: "/brand/handld-logo.png",
+    width: 34,
+    url: staff ? "/admin" : "/dashboard",
+    accessibilityLabel: "handld",
+  };
+
   return (
     <Frame
       topBar={topBar}
+      logo={logo}
       navigation={
         <Navigation location="/">
           <Navigation.Section items={navigationItems} />

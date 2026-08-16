@@ -13,6 +13,7 @@ import {
   Text,
   TextField,
 } from "@shopify/polaris";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { PasswordField } from "@/components/password-field";
@@ -47,13 +48,23 @@ export default function SignInPage() {
     <Page narrowWidth>
       <Box paddingBlockStart="400">
         <BlockStack gap="400">
-          <BlockStack gap="100">
-            <Text as="h1" variant="heading2xl" alignment="center">
-              handld
-            </Text>
-            <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
-              Sign in to manage change requests for your store
-            </Text>
+          <BlockStack gap="300" inlineAlign="center">
+            <Image
+              src="/brand/handld-logo.png"
+              alt="handld"
+              width={64}
+              height={64}
+              priority
+              style={{ borderRadius: 14 }}
+            />
+            <BlockStack gap="100">
+              <Text as="h1" variant="heading2xl" alignment="center">
+                handld
+              </Text>
+              <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
+                Sign in to manage change requests for your site
+              </Text>
+            </BlockStack>
           </BlockStack>
 
           <Card>

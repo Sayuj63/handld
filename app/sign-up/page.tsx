@@ -13,6 +13,7 @@ import {
   Text,
   TextField,
 } from "@shopify/polaris";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { PasswordField } from "@/components/password-field";
@@ -48,13 +49,23 @@ export default function SignUpPage() {
     <Page narrowWidth>
       <Box paddingBlockStart="400">
         <BlockStack gap="400">
-          <BlockStack gap="100">
-            <Text as="h1" variant="heading2xl" alignment="center">
-              Create your account
-            </Text>
-            <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
-              Usually you&apos;ll have received an invitation from your agency
-            </Text>
+          <BlockStack gap="300" inlineAlign="center">
+            <Image
+              src="/brand/handld-logo.png"
+              alt="handld"
+              width={64}
+              height={64}
+              priority
+              style={{ borderRadius: 14 }}
+            />
+            <BlockStack gap="100">
+              <Text as="h1" variant="heading2xl" alignment="center">
+                Create your account
+              </Text>
+              <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
+                Usually you&apos;ll have received an invitation from your agency
+              </Text>
+            </BlockStack>
           </BlockStack>
 
           <Card>

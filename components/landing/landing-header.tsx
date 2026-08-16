@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
@@ -77,7 +78,14 @@ export function LandingHeader() {
     <header className={`hd-header hd-header--${state}`}>
       <nav className="hd-header__pill">
         <a href="#top" className="hd-header__logo" onClick={(e) => scrollTo(e, "#top")}>
-          <span className="hd-header__logo-mark" aria-hidden />
+          <Image
+            className="hd-header__logo-mark"
+            src="/brand/handld-logo.png"
+            alt=""
+            width={28}
+            height={28}
+            priority
+          />
           handld
         </a>
         <div className="hd-header__links">

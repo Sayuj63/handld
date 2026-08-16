@@ -5,8 +5,9 @@ import "@shopify/polaris/build/esm/styles.css";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "handld",
-  description: "Client change request portal for Shopify stores",
+  title: "handld — Any change, handled.",
+  description:
+    "Unlimited change requests for your site, tracked in one place. One dedicated developer, one flat monthly retainer.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
