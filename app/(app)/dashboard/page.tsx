@@ -83,7 +83,7 @@ export default function DashboardPage() {
     <Page
       fullWidth
       title={org ? org.orgName : "Dashboard"}
-      subtitle="Track and submit change requests for your store"
+      subtitle="Track and submit change requests for your site"
       primaryAction={
         <Button variant="primary" onClick={() => router.push(`/dashboard/new${orgId ? `?orgId=${orgId}` : ""}`)}>
           New request
@@ -104,39 +104,30 @@ export default function DashboardPage() {
           </Card>
         )}
 
-        <Grid columns={{ xs: 2, md: 4 }}>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">
-              Open
-            </Text>
-            <Text as="p" variant="heading2xl">
-              {counts.open}
-            </Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">
-              Total
-            </Text>
-            <Text as="p" variant="heading2xl">
-              {total}
-            </Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">
-              In review
-            </Text>
-            <Text as="p" variant="heading2xl">
-              {requests.filter((r) => r.status === "in_review").length}
-            </Text>
-          </Card>
-          <Card padding="400">
-            <Text as="p" variant="bodyMd" tone="subdued">
-              Completed
-            </Text>
-            <Text as="p" variant="heading2xl">
-              {requests.filter((r) => r.status === "completed").length}
-            </Text>
-          </Card>
+        <Grid columns={{ xs: 2, md: 2, xl: 4 }} gap={{ xs: "16px", md: "16px" }}>
+          {[
+            { label: "Open", value: counts.open },
+            { label: "Total", value: total },
+            {
+              label: "In review",
+              value: requests.filter((r) => r.status === "in_review").length,
+            },
+            {
+              label: "Completed",
+              value: requests.filter((r) => r.status === "completed").length,
+            },
+          ].map((card) => (
+            <Card key={card.label} padding="400">
+              <BlockStack gap="100">
+                <Text as="p" variant="bodyMd" tone="subdued">
+                  {card.label}
+                </Text>
+                <Text as="p" variant="heading2xl">
+                  {String(card.value)}
+                </Text>
+              </BlockStack>
+            </Card>
+          ))}
         </Grid>
 
         <InlineStack gap="200" wrap>
