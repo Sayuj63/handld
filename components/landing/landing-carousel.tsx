@@ -182,7 +182,7 @@ export function LandingCarousel() {
               }`}
             >
               {slide.variant === "character" && <VideoArt src="/videos/character-waving.mp4" />}
-              {slide.variant === "request-card" && <RequestCardArt />}
+              {slide.variant === "request-card" && <VideoArt src="/videos/unlimited-requests.mp4" />}
               {slide.variant === "workflow" && <WorkflowIcons />}
               {slide.variant === "clouds" && <VideoArt src="/videos/abstract-shapes.mp4" />}
               {i === SLIDES.length - 1 && <div className="hd-carousel__last-tint" aria-hidden />}
@@ -216,22 +216,4 @@ function VideoArt({ src }: { src: string }) {
   );
 }
 
-function RequestCardArt() {
-  return (
-    <div className="hd-request-card">
-      <p className="hd-request-card__eyebrow">New request</p>
-      <p className="hd-request-card__title">Fix homepage banner cropping</p>
-      <p className="hd-request-card__desc">
-        Banner text is cut off on mobile — adjust the crop to match the attached reference.
-      </p>
-      <span className="hd-request-card__status">In Progress</span>
-      <div className="hd-request-card__progress">
-        <p className="hd-request-card__progress-label">Progress</p>
-        <div className="hd-request-card__progress-bar">
-          <div className="hd-request-card__progress-fill" />
-        </div>
-      </div>
-    </div>
-  );
-}
 

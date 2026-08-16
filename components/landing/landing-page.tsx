@@ -6,10 +6,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { LandingCarousel } from "@/components/landing/landing-carousel";
+import { LandingFaq } from "@/components/landing/landing-faq";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHeader } from "@/components/landing/landing-header";
 import { LandingHero } from "@/components/landing/landing-hero";
-import { LandingPricing } from "@/components/landing/landing-pricing";
 import { LandingReveal } from "@/components/landing/landing-reveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -58,9 +58,35 @@ export function LandingPage() {
         </section>
         <LandingReveal />
         <LandingCarousel />
-        <LandingPricing />
+        <LandingCta />
+        <LandingFaq />
       </main>
       <LandingFooter />
     </div>
+  );
+}
+
+// Inline SLG-friendly CTA that replaces the old pricing grid — the whole
+// funnel points at "book a call", not self-serve checkout.
+function LandingCta() {
+  return (
+    <section className="hd-cta" id="pricing">
+      <div className="hd-cta__inner">
+        <p className="hd-cta__eyebrow">How we work</p>
+        <h2 className="hd-cta__title">
+          Built for teams who ship
+          <br />
+          more than a homepage.
+        </h2>
+        <p className="hd-cta__sub">
+          Every engagement is scoped on a call — one dedicated developer, unlimited requests,
+          flat monthly retainer. No public tiers, no self-serve. Just the right team for your
+          site, priced against the work.
+        </p>
+        <a className="hd-cta__button" href="mailto:hi@handld.atrey.dev">
+          Book a call
+        </a>
+      </div>
+    </section>
   );
 }

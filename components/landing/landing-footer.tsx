@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const EMAIL = "hi@handld.co";
+const EMAIL = "hi@handld.atrey.dev";
 
 export function LandingFooter() {
   const giantRef = useRef<HTMLDivElement>(null);

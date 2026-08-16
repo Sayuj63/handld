@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const NAV_LINKS = [
   { label: "How it works", href: "#how-it-works" },
   { label: "Our clients", href: "#clients" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 type HeaderState = "hero" | "body" | "carousel";
@@ -97,7 +97,7 @@ export function LandingHeader() {
             <span key={i} className={`hd-header__dot${i === carouselActiveDot ? " hd-header__dot--active" : ""}`} />
           ))}
         </div>
-        <a className="hd-header__cta" href="mailto:hi@handld.co">
+        <a className="hd-header__cta" href="mailto:hi@handld.atrey.dev">
           Book a call
         </a>
       </nav>

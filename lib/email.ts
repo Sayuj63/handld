@@ -5,9 +5,9 @@ import { STATUS_LABELS } from "@/lib/constants";
 /* Email delivery: Resend in production, console in dev. */
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-// No domain yet? Resend's onboarding@resend.dev test sender only delivers to
-// your own account email. Set EMAIL_FROM to a verified domain once you add one.
-export const EMAIL_FROM = process.env.EMAIL_FROM || "handld <onboarding@resend.dev>";
+// handld.atrey.dev is verified on Resend as of Aug 17 2026 — sends deliver
+// from the verified subdomain. Override via EMAIL_FROM env if needed.
+export const EMAIL_FROM = process.env.EMAIL_FROM || "handld <hi@handld.atrey.dev>";
 
 export async function sendEmail(input: {
   to: string;
