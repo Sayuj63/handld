@@ -1,4 +1,4 @@
-import { count, eq, sql } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import { NextRequest } from "next/server";
 
 import { changeRequests, invitation, member, organization, stores, user as userTable } from "@/db/schema";
@@ -39,7 +39,15 @@ export const GET = route(async (req: NextRequest, ctx) => {
       .from(changeRequests)
       .where(eq(changeRequests.orgId, orgId)),
     role === "owner" || role === "admin" || user.globalRole === "super_admin"
-      ? db.select().from(invitation).where(eq(invitation.organizationId, orgId))
+      ? db
+          .select()
+          .from(invitation)
+          .where(
+            and(
+              eq(invitation.organizationId, orgId),
+              eq(invitation.status, "pending"),
+            ),
+          )
       : [],
   ]);
 

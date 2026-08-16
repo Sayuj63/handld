@@ -1,8 +1,10 @@
+import { randomUUID } from "node:crypto";
+
 import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
-import { member, organization, user as userTable } from "@/db/schema";
+import { invitation, member, organization, user as userTable } from "@/db/schema";
 import { db } from "@/lib/db";
 import { badRequest, json, route } from "@/lib/http";
 import { apiLimiter, checkLimit, inviteLimiter } from "@/lib/ratelimit";
@@ -12,6 +14,8 @@ import { auth } from "@/lib/auth";
 import { audit } from "@/lib/audit";
 import { appUrl, inviteEmail } from "@/lib/email";
 import { enqueueEmail, flushOutbox } from "@/lib/notifications";
+
+const INVITE_TTL_DAYS = 7;
 
 export const GET = route(async (req: NextRequest, ctx) => {
   const user = await requireUser();
@@ -62,15 +66,52 @@ export const POST = route(async (req: NextRequest, ctx) => {
     .limit(1);
   if (memberCheck[0]) throw badRequest("That user is already a member of this organization");
 
-  const result = await auth.api.createInvitation({
-    headers: await headers(),
-    body: {
+  // Try Better Auth's createInvitation first — it handles duplicate detection
+  // and hooks into the organization plugin. It throws when the caller isn't a
+  // member of the target org (super-admin bypass case), so we fall through to
+  // a direct DB insert. Either path lands the same shape of row.
+  let invitationRow: { id: string; expiresAt: Date };
+  try {
+    const result = await auth.api.createInvitation({
+      headers: await headers(),
+      body: {
+        organizationId: orgId,
+        email: body.email,
+        role: body.role,
+      },
+    });
+    const raw = result as { id: string; expiresAt: string | Date };
+    invitationRow = {
+      id: raw.id,
+      expiresAt: raw.expiresAt instanceof Date ? raw.expiresAt : new Date(raw.expiresAt),
+    };
+  } catch {
+    // Kill any older pending invite for the same (org, email) so we don't
+    // accumulate duplicates each time super-admin re-invites.
+    await db
+      .update(invitation)
+      .set({ status: "canceled" })
+      .where(
+        and(
+          eq(invitation.organizationId, orgId),
+          eq(invitation.email, body.email),
+          eq(invitation.status, "pending"),
+        ),
+      );
+
+    const id = randomUUID();
+    const expiresAt = new Date(Date.now() + INVITE_TTL_DAYS * 24 * 60 * 60 * 1000);
+    await db.insert(invitation).values({
+      id,
       organizationId: orgId,
       email: body.email,
       role: body.role,
-    },
-  });
-  const invitationRow = result as { id: string; expiresAt: string | Date };
+      status: "pending",
+      expiresAt,
+      inviterId: user.id,
+    });
+    invitationRow = { id, expiresAt };
+  }
 
   const orgRow = await db
     .select({ name: organization.name })
