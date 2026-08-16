@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Banner,
   BlockStack,
@@ -15,6 +15,7 @@ import {
 } from "@shopify/polaris";
 import { XIcon } from "@shopify/polaris-icons";
 
+import { ImageEditor } from "@/components/image-editor";
 import { api } from "@/lib/api-client";
 import { compressImageFiles } from "@/lib/compress-image";
 import type { AttachmentLite, CommentLite } from "@/lib/types";
@@ -31,8 +32,24 @@ export function CommentThread({
   const [comments, setComments] = useState(initialComments);
   const [body, setBody] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
+
+  // Paste-from-clipboard support (like the request form).
+  useEffect(() => {
+    const onPaste = (e: ClipboardEvent) => {
+      const pasted = Array.from(e.clipboardData?.files ?? []);
+      if (pasted.length) {
+        void compressImageFiles(pasted.slice(0, 5)).then((compressed) =>
+          setFiles((prev) => [...prev, ...compressed].slice(0, 5)),
+        );
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("paste", onPaste);
+    return () => document.removeEventListener("paste", onPaste);
+  }, []);
 
   async function submit() {
     if (!body.trim() && !files.length) return;
@@ -100,9 +117,16 @@ export function CommentThread({
             </DropZone>
             {files.map((f, i) => (
               <div key={i} style={{ position: "relative" }}>
-                <Thumbnail size="small" alt={f.name} source={URL.createObjectURL(f)} />
+                <button
+                  type="button"
+                  title="Click to edit & mark up"
+                  onClick={() => setEditingIdx(i)}
+                  style={{ border: 0, background: "none", padding: 0, cursor: "pointer", borderRadius: 8 }}
+                >
+                  <Thumbnail size="small" alt={f.name} source={URL.createObjectURL(f)} />
+                </button>
                 <div
-                  style={{ position: "absolute", top: -6, right: -6, cursor: "pointer" }}
+                  style={{ position: "absolute", top: -6, right: -6, cursor: "pointer", background: "#fff", borderRadius: 999, border: "1px solid #c9cccf" }}
                   onClick={() => setFiles((prev) => prev.filter((_, j) => j !== i))}
                 >
                   <XIcon width={14} height={14} />
@@ -116,6 +140,18 @@ export function CommentThread({
           </InlineStack>
         </BlockStack>
       </Card>
+
+      <ImageEditor
+        open={editingIdx !== null}
+        file={editingIdx !== null ? (files[editingIdx] ?? null) : null}
+        onClose={() => setEditingIdx(null)}
+        onSave={(edited) => {
+          if (editingIdx !== null) {
+            setFiles((prev) => prev.map((f, j) => (j === editingIdx ? edited : f)));
+          }
+          setEditingIdx(null);
+        }}
+      />
 
       {comments.length === 0 ? (
         <Text as="p" variant="bodyMd" tone="subdued">

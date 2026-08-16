@@ -17,6 +17,7 @@ import {
 import { XIcon } from "@shopify/polaris-icons";
 import { useRouter } from "next/navigation";
 
+import { ImageEditor } from "@/components/image-editor";
 import { api } from "@/lib/api-client";
 import { compressImageFiles } from "@/lib/compress-image";
 import { PRIORITIES, PRIORITY_LABELS, REQUEST_TYPES, TYPE_LABELS } from "@/lib/constants";
@@ -38,6 +39,7 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
   const [referenceUrl, setReferenceUrl] = useState("");
   const [targetSection, setTargetSection] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
 
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -168,12 +170,34 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
             <InlineStack gap="200" wrap>
               {files.map((f, i) => (
                 <div key={i} style={{ position: "relative" }}>
-                  <Thumbnail size="medium" alt={f.name} source={URL.createObjectURL(f)} />
+                  <button
+                    type="button"
+                    title="Click to edit & mark up"
+                    onClick={() => setEditingIdx(i)}
+                    style={{ border: 0, background: "none", padding: 0, cursor: "pointer", borderRadius: 8 }}
+                  >
+                    <Thumbnail size="medium" alt={f.name} source={URL.createObjectURL(f)} />
+                  </button>
                   <div
-                    style={{ position: "absolute", top: -6, right: -6, cursor: "pointer" }}
+                    style={{ position: "absolute", top: -6, right: -6, cursor: "pointer", background: "#fff", borderRadius: 999, border: "1px solid #c9cccf" }}
                     onClick={() => setFiles((prev) => prev.filter((_, j) => j !== i))}
                   >
-                    <XIcon width={16} height={16} />
+                    <XIcon width={14} height={14} />
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: -6,
+                      left: -6,
+                      background: "#fff",
+                      borderRadius: 999,
+                      border: "1px solid #c9cccf",
+                      padding: "1px 6px",
+                      fontSize: 11,
+                      color: "#333",
+                    }}
+                  >
+                    ✏️ edit
                   </div>
                   <Text as="p" variant="bodySm" tone="subdued">
                     {f.name.length > 24 ? f.name.slice(0, 24) + "…" : f.name}
@@ -194,6 +218,18 @@ export function RequestForm({ orgs, initialOrgId }: { orgs: OrgLite[]; initialOr
       >
         Submit change request
       </Button>
+
+      <ImageEditor
+        open={editingIdx !== null}
+        file={editingIdx !== null ? (files[editingIdx] ?? null) : null}
+        onClose={() => setEditingIdx(null)}
+        onSave={(edited) => {
+          if (editingIdx !== null) {
+            setFiles((prev) => prev.map((f, j) => (j === editingIdx ? edited : f)));
+          }
+          setEditingIdx(null);
+        }}
+      />
     </BlockStack>
   );
 }
