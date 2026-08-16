@@ -176,7 +176,7 @@ export const invitation = pgTable(
 );
 
 /* ─────────────────────────────────────────────────────────────
- * APP TABLES (ChangeDesk domain)
+ * APP TABLES (handld domain)
  * ───────────────────────────────────────────────────────────── */
 
 /** Shopify stores belonging to an org (multi-store support) */

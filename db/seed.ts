@@ -99,7 +99,7 @@ async function main() {
   const adminPassword = process.env.SUPER_ADMIN_PASSWORD || "ChangeDesk123!";
   const demoPassword = "ChangeDesk123!";
 
-  console.log("Seeding ChangeDesk…\n");
+  console.log("Seeding handld…\n");
 
   // 1. Users
   const sayujId = await upsertUser({
@@ -117,7 +117,7 @@ async function main() {
 
   const priyaId = await upsertUser({
     id: "seed-priya",
-    email: "priya@changedesk.dev",
+    email: "priya@handld.dev",
     name: "Priya (Team)",
     globalRole: "team_member",
     password: demoPassword,
@@ -354,7 +354,7 @@ async function main() {
   console.log("Done ✓\n");
   console.log("── Demo accounts (password for all: ChangeDesk123!) ──");
   console.log(`  Super admin  → ${superAdminEmail}   (password: ${adminPassword})`);
-  console.log("  Team member  → priya@changedesk.dev");
+  console.log("  Team member  → priya@handld.dev");
   console.log("  Client owner → prachi@studiocaramel.com  (Studio Caramel)");
   console.log("  Client owner → meera@noirbeauty.com      (Noir Beauty)");
   console.log("  Client member→ aarav@studiocaramel.com");

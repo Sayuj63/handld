@@ -12,13 +12,13 @@ import * as schema from "../db/schema";
  * query — so importing this module never blocks on a missing DATABASE_URL.
  */
 const connectionString =
-  process.env.DATABASE_URL ?? "postgres://localhost:5432/changedesk";
+  process.env.DATABASE_URL ?? "postgres://localhost:5432/handld";
 
 // Reuse the connection across HMR reloads in dev.
-const globalForDb = globalThis as unknown as { __changedeskClient?: postgres.Sql };
+const globalForDb = globalThis as unknown as { __handldClient?: postgres.Sql };
 
 const client =
-  globalForDb.__changedeskClient ??
+  globalForDb.__handldClient ??
   postgres(connectionString, {
     max: 1,
     prepare: false,
@@ -26,7 +26,7 @@ const client =
   });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForDb.__changedeskClient = client;
+  globalForDb.__handldClient = client;
 }
 
 export const db = drizzle(client, { schema });

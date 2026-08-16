@@ -214,7 +214,7 @@ export async function sendDigests(force = false) {
       if (mode === "daily_digest" && hoursSince < 24) continue;
     }
 
-    const orgName = group[0].orgId ? (await orgNameFor(group[0].orgId)) : "ChangeDesk";
+    const orgName = group[0].orgId ? (await orgNameFor(group[0].orgId)) : "handld";
     const { subject, html } = digestEmail({
       orgName,
       items: group.map((r) => ({ title: r.subject, detail: "" })),
@@ -242,5 +242,5 @@ async function orgNameFor(orgId: string): Promise<string> {
     .from(organization)
     .where(eq(organization.id, orgId))
     .limit(1);
-  return rows[0]?.name ?? "ChangeDesk";
+  return rows[0]?.name ?? "handld";
 }

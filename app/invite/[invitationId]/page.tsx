@@ -157,7 +157,7 @@ export default function InvitePage() {
             </Text>
             <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
               {invitation.orgName} has invited <strong>{invitation.email}</strong> to join
-              ChangeDesk{invitation.role === "owner" ? " as an organization owner" : ""}.
+              handld{invitation.role === "owner" ? " as an organization owner" : ""}.
             </Text>
           </BlockStack>
 

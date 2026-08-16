@@ -1,5 +1,5 @@
 # PRD — Client Change Request Portal
-### Working name: **ChangeDesk**
+### Working name: **handld**
 
 | | |
 |---|---|
@@ -14,7 +14,7 @@
 
 Sayuj runs freelance/agency work across 7–8 Shopify clients (fashion, beauty, e-commerce). Right now, change requests likely come in through WhatsApp, email, and DMs — scattered, hard to track, easy to lose, and impossible to report on.
 
-**ChangeDesk** is a self-serve portal where each client can log in, submit change requests (with screenshots, references, and descriptions) against their store, and track status in real time — replacing ad-hoc chat-based requests with a structured, auditable workflow. Sayuj (and any future team members) manage all client requests from a single admin view.
+**handld** is a self-serve portal where each client can log in, submit change requests (with screenshots, references, and descriptions) against their store, and track status in real time — replacing ad-hoc chat-based requests with a structured, auditable workflow. Sayuj (and any future team members) manage all client requests from a single admin view.
 
 This is fundamentally a **multi-tenant support/ticketing system**, scoped specifically to Shopify store change management.
 

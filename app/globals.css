@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ChangeDesk sits on top of Polaris — keep the canvas light and neutral
+/* handld sits on top of Polaris — keep the canvas light and neutral
    so Polaris's own tokens (whites, soft greys, restrained green) drive the
    look, exactly like the Shopify Admin. Tailwind handles page layout only. */
 

@@ -7,7 +7,7 @@ import { STATUS_LABELS } from "@/lib/constants";
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 // No domain yet? Resend's onboarding@resend.dev test sender only delivers to
 // your own account email. Set EMAIL_FROM to a verified domain once you add one.
-export const EMAIL_FROM = process.env.EMAIL_FROM || "ChangeDesk <onboarding@resend.dev>";
+export const EMAIL_FROM = process.env.EMAIL_FROM || "handld <onboarding@resend.dev>";
 
 export async function sendEmail(input: {
   to: string;
@@ -77,7 +77,7 @@ function layout(title: string, preheader: string, bodyHtml: string) {
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:${BRAND.white};border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
     <tr><td style="background:${BRAND.ink};padding:22px 28px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-        <td style="font-size:17px;font-weight:700;color:${BRAND.white};letter-spacing:0.01em;">ChangeDesk</td>
+        <td style="font-size:17px;font-weight:700;color:${BRAND.white};letter-spacing:0.01em;">handld</td>
         <td align="right" style="font-size:12px;color:#a0a4a8;">Client change portal</td>
       </tr></table>
     </td></tr>
@@ -86,15 +86,15 @@ function layout(title: string, preheader: string, bodyHtml: string) {
       ${bodyHtml}
     </td></tr>
     <tr><td style="padding:18px 28px;border-top:1px solid ${BRAND.border};background:#fafbfb;">
-      <p style="margin:0 0 8px;font-size:12px;line-height:1.6;color:${BRAND.faint};">ChangeDesk · Client change request portal</p>
+      <p style="margin:0 0 8px;font-size:12px;line-height:1.6;color:${BRAND.faint};">handld · Client change request portal</p>
       <p style="margin:0;font-size:12px;line-height:1.6;color:${BRAND.faint};">
         <a href="${esc(appUrl())}/notifications" style="color:${BRAND.muted};text-decoration:underline;">Notification settings</a>
         &nbsp;·&nbsp;
-        <a href="${esc(appUrl())}" style="color:${BRAND.muted};text-decoration:underline;">Open ChangeDesk</a>
+        <a href="${esc(appUrl())}" style="color:${BRAND.muted};text-decoration:underline;">Open handld</a>
       </p>
     </td></tr>
   </table>
-  <p style="margin:12px 0 0;font-size:11px;line-height:1.5;color:${BRAND.faint};text-align:center;">You're receiving this because of activity on a change request in ChangeDesk.</p>
+  <p style="margin:12px 0 0;font-size:11px;line-height:1.5;color:${BRAND.faint};text-align:center;">You're receiving this because of activity on a change request in handld.</p>
 </td></tr></table>
 </body>
 </html>`;
@@ -156,12 +156,12 @@ function statusFlow(from: string, to: string) {
 
 export function inviteEmail(input: { orgName: string; inviterName: string; inviteUrl: string; expiresAt: Date }) {
   return {
-    subject: `You're invited to ${input.orgName} on ChangeDesk`,
+    subject: `You're invited to ${input.orgName} on handld`,
     html: layout(
       `You're invited to ${input.orgName}`,
-      `Join ${input.orgName} on ChangeDesk — invitation from ${input.inviterName}`,
+      `Join ${input.orgName} on handld — invitation from ${input.inviterName}`,
       `<p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:${BRAND.muted};">Hi there,</p>
-<p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:${BRAND.ink};">${esc(input.inviterName)} invited you to collaborate on change requests for <strong>${esc(input.orgName)}</strong> on ChangeDesk.</p>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:${BRAND.ink};">${esc(input.inviterName)} invited you to collaborate on change requests for <strong>${esc(input.orgName)}</strong> on handld.</p>
 ${infoBlock("Organization", input.orgName)}
 <p style="margin:0 0 16px;font-size:13px;line-height:1.6;color:${BRAND.muted};">Create your account (or sign in) to accept the invitation. It expires on <strong>${input.expiresAt.toLocaleDateString()}</strong>.</p>
 ${linkButton(input.inviteUrl, "Accept invitation")}
@@ -237,10 +237,10 @@ ${fallbackLink(input.url)}`,
 export function digestEmail(input: { orgName: string; items: { title: string; detail: string }[] }) {
   const count = input.items.length;
   return {
-    subject: `${input.orgName} — ${count} update${count === 1 ? "" : "s"} from ChangeDesk`,
+    subject: `${input.orgName} — ${count} update${count === 1 ? "" : "s"} from handld`,
     html: layout(
-      "Your ChangeDesk digest",
-      `${input.orgName} — ${count} update${count === 1 ? "" : "s"} in ChangeDesk`,
+      "Your handld digest",
+      `${input.orgName} — ${count} update${count === 1 ? "" : "s"} in handld`,
       `<p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:${BRAND.ink};">You have ${count} update${count === 1 ? "" : "s"} for <strong>${esc(input.orgName)}</strong>:</p>
 ${input.items
   .map(
@@ -251,7 +251,7 @@ ${input.items
 </tr></table>`,
   )
   .join("")}
-${linkButton(appUrl(), "Open ChangeDesk")}`,
+${linkButton(appUrl(), "Open handld")}`,
     ),
   };
 }

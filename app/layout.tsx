@@ -5,7 +5,7 @@ import "@shopify/polaris/build/esm/styles.css";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "ChangeDesk",
+  title: "handld",
   description: "Client change request portal for Shopify stores",
 };
 

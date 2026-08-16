@@ -49,7 +49,7 @@ export default function SignInPage() {
         <BlockStack gap="400">
           <BlockStack gap="100">
             <Text as="h1" variant="heading2xl" alignment="center">
-              ChangeDesk
+              handld
             </Text>
             <Text as="p" variant="bodyLg" alignment="center" tone="subdued">
               Sign in to manage change requests for your store

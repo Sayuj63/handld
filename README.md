@@ -1,4 +1,4 @@
-# ChangeDesk
+# handld
 
 A self-serve client change-request portal for freelance/agency Shopify work.
 Clients log in, submit change requests (screenshots, references, priority)
@@ -68,7 +68,7 @@ cron route).
 | Role | Email | Password |
 |---|---|---|
 | Super admin | your `SUPER_ADMIN_EMAIL` | `ChangeDesk123!` (or `SUPER_ADMIN_PASSWORD`) |
-| Team member | `priya@changedesk.dev` | `ChangeDesk123!` |
+| Team member | `priya@handld.dev` | `ChangeDesk123!` |
 | Client owner | `prachi@studiocaramel.com` | `ChangeDesk123!` |
 | Client owner | `meera@noirbeauty.com` | `ChangeDesk123!` |
 | Client member | `aarav@studiocaramel.com` | `ChangeDesk123!` |
@@ -89,10 +89,10 @@ vercel deploy --prod
 ```
 
 **Email without a domain yet:** with only a `RESEND_API_KEY`, use Resend's
-test sender `ChangeDesk <onboarding@resend.dev>` as `EMAIL_FROM`. It delivers
+test sender `handld <onboarding@resend.dev>` as `EMAIL_FROM`. It delivers
 only to *your own* Resend account email — enough to verify the pipeline live.
 To send to real clients, verify a domain in the Resend dashboard (free) and
-switch `EMAIL_FROM` to `ChangeDesk <no-reply@yourdomain.com>`.
+switch `EMAIL_FROM` to `handld <no-reply@yourdomain.com>`.
 
 After deploying, run the seed against the production DB if it's a fresh
 database: `DATABASE_URL=... npm run db:seed` from your machine.
