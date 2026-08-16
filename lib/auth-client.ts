@@ -4,16 +4,18 @@ import { createAuthClient } from "better-auth/react";
 import { adminClient, organizationClient } from "better-auth/client/plugins";
 
 /**
- * baseURL priority:
- *  1. NEXT_PUBLIC_APP_URL (explicit override — required for local dev only)
- *  2. window.location.origin — same-origin call, works everywhere the app
- *     serves its own /api/auth routes (which is always, so this is the safe
- *     default for prod). Fixes "Failed to fetch" when NEXT_PUBLIC_APP_URL
- *     was baked as localhost on a Vercel build.
+ * In the browser, always call same-origin — the app serves /api/auth on its
+ * own domain, so we never need to send auth requests cross-origin. This
+ * makes the client immune to NEXT_PUBLIC_APP_URL being stale/wrong in the
+ * bundle (previous bug: it was baked to changedesk.vercel.app, so browsers
+ * at handld.atrey.dev tried to POST across origins → "Failed to fetch").
+ *
+ * For SSR (no window), fall back to the env var.
  */
 const baseURL =
-  process.env.NEXT_PUBLIC_APP_URL ||
-  (typeof window !== "undefined" ? window.location.origin : undefined);
+  typeof window !== "undefined"
+    ? window.location.origin
+    : process.env.NEXT_PUBLIC_APP_URL;
 
 export const authClient = createAuthClient({
   baseURL,

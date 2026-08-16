@@ -1479,73 +1479,14 @@
 }
 
 /* ============================================================
-   SLG CTA — replaces the old pricing grid; funnels to "book a call"
-   ============================================================ */
-
-.hd-cta {
-  background: var(--hd-black);
-  color: var(--hd-pure-white);
-  padding: clamp(90px, 12vw, 160px) 6vw;
-  text-align: center;
-}
-
-.hd-cta__inner {
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.hd-cta__eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--hd-orange);
-  margin-bottom: 20px;
-}
-
-.hd-cta__title {
-  font-family: var(--hd-font-display);
-  font-weight: 800;
-  font-size: clamp(38px, 5.4vw, 72px);
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-  margin-bottom: 24px;
-}
-
-.hd-cta__sub {
-  font-size: clamp(16px, 1.5vw, 19px);
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 58ch;
-  margin: 0 auto 40px;
-}
-
-.hd-cta__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--hd-orange);
-  color: var(--hd-pure-white);
-  font-weight: 600;
-  font-size: 16px;
-  padding: 16px 32px;
-  border-radius: 999px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.hd-cta__button:hover {
-  background: var(--hd-orange-light);
-  transform: translateY(-2px);
-}
-
-/* ============================================================
    §4.9 — Footer (two-column card + giant hover-to-copy email)
    ============================================================ */
 
 .hd-footer {
   background: var(--hd-grey-cool);
   position: relative;
-  padding: clamp(40px, 5vw, 72px) 4vw clamp(28px, 3vw, 40px);
+  padding: clamp(40px, 5vw, 72px) 4vw clamp(48px, 6vw, 96px);
+  overflow: hidden;
 }
 
 .hd-footer__content {
@@ -1715,10 +1656,13 @@
   clip-path: polygon(28% 0, 72% 0, 100% 40%, 100% 100%, 0 100%, 0 40%);
 }
 
-/* Giant hover-to-copy email — decorative, functional on hover */
+/* Giant hover-to-copy email — decorative, functional on hover.
+   overflow-x: hidden clip because on narrow viewports the ~200px display
+   text is naturally wider than the screen. */
 .hd-footer__giant {
-  margin: 40px auto 0;
-  max-width: 1240px;
+  margin: clamp(48px, 6vw, 80px) auto 0;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1726,20 +1670,23 @@
   cursor: pointer;
   padding: 20px 0 8px;
   user-select: none;
+  overflow: hidden;
+  min-height: clamp(80px, 14vw, 200px);
 }
 
 .hd-footer__giant-text {
   font-family: var(--hd-font-display);
   font-weight: 800;
-  font-size: clamp(52px, 12vw, 200px);
+  font-size: clamp(48px, 14vw, 200px);
   letter-spacing: -0.04em;
-  color: rgba(13, 15, 20, 0.08);
+  color: rgba(13, 15, 20, 0.16);
   white-space: nowrap;
+  line-height: 1;
   transition: color 0.35s ease, letter-spacing 0.35s ease;
 }
 
 .hd-footer__giant--hover .hd-footer__giant-text {
-  color: rgba(13, 15, 20, 0.14);
+  color: rgba(13, 15, 20, 0.28);
 }
 
 .hd-footer__copy-pill {
