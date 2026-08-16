@@ -5,6 +5,11 @@ Clients log in, submit change requests (screenshots, references, priority)
 against their store, and track status in real time. You (and your team) run
 every client's queue from a single admin view.
 
+The root URL serves a **marketing landing page** for logged-out visitors
+(hero with phone mockup, trusted-by row, scroll-pinned text reveal,
+horizontal card carousel, pricing, FAQ, sticky-reveal footer — GSAP
+ScrollTrigger + Lenis). Logged-in users are redirected straight into the app.
+
 Built on **Next.js 15 (App Router) + TypeScript**, **Better Auth**
 (organization + admin plugins), **Drizzle ORM + PostgreSQL**, **Shopify
 Polaris**, **Resend**, and **Upstash** (rate limiting / Redis) — the stack
